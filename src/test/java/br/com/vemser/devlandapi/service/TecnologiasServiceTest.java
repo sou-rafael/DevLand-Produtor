@@ -49,9 +49,6 @@ public class TecnologiasServiceTest {
     private UsuarioRepository usuarioRepository;
 
     @Mock
-    private EmailServiceTest emailService;
-
-    @Mock
     private UserLoginService userLoginService;
 
     private ObjectMapper objectMapper = new ObjectMapper();

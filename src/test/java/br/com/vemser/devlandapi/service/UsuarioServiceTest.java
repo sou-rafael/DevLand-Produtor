@@ -15,6 +15,7 @@ import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.devlandapi.repository.LogUsuarioRepository;
 import br.com.vemser.devlandapi.repository.UserLoginRepository;
 import br.com.vemser.devlandapi.repository.UsuarioRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -61,8 +62,6 @@ public class UsuarioServiceTest {
     @Mock
     private LogUsuarioRepository logUsuarioRepository;
 
-    @Mock
-    private EmailService emailService;
 
     @Before
     public void init() {
@@ -74,7 +73,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    public void deveTestarUsuarioDevCreateComSucesso() throws RegraDeNegocioException {
+    public void deveTestarUsuarioDevCreateComSucesso() throws RegraDeNegocioException, JsonProcessingException {
 
         UserLoginCreateDTO userLoginCreateDTO = getUserLoginCreateDTO();
 
@@ -107,7 +106,7 @@ public class UsuarioServiceTest {
     }
 
     @Test(expected = RegraDeNegocioException.class)
-    public void deveTestarUsuarioCreateAdminSemSucesso() throws RegraDeNegocioException {
+    public void deveTestarUsuarioCreateAdminSemSucesso() throws RegraDeNegocioException, JsonProcessingException {
 
         UserLoginCreateDTO userLoginCreateDTO = getUserLoginCreateDTO();
 
@@ -134,7 +133,7 @@ public class UsuarioServiceTest {
     }
 
     @Test(expected = RegraDeNegocioException.class)
-    public void deveTestarUsuarioDevCreateSemSucesso() throws RegraDeNegocioException {
+    public void deveTestarUsuarioDevCreateSemSucesso() throws RegraDeNegocioException, JsonProcessingException {
 
         UserLoginCreateDTO userLoginCreateDTO = getUserLoginCreateDTO();
 
@@ -159,7 +158,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    public void deveTestarUsuarioEmpresaCreateComSucesso() throws RegraDeNegocioException {
+    public void deveTestarUsuarioEmpresaCreateComSucesso() throws RegraDeNegocioException, JsonProcessingException {
 
         UserLoginCreateDTO userLoginCreateDTO = getUserLoginCreateDTO();
 
@@ -192,7 +191,7 @@ public class UsuarioServiceTest {
     }
 
     @Test(expected = RegraDeNegocioException.class)
-    public void deveTestarUsuarioEmpresaCreateSemSucesso() throws RegraDeNegocioException {
+    public void deveTestarUsuarioEmpresaCreateSemSucesso() throws RegraDeNegocioException, JsonProcessingException {
 
         UserLoginCreateDTO userLoginCreateDTO = getUserLoginCreateDTO();
 
@@ -338,7 +337,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    public void deveTestarDeleteComSucesso() throws RegraDeNegocioException {
+    public void deveTestarDeleteComSucesso() throws RegraDeNegocioException, JsonProcessingException {
         // setup
 
         Integer idParaDeletar = 1;
