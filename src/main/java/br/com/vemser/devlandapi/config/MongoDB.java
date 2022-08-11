@@ -24,4 +24,5 @@ public class MongoDB {
 
     MongoCollection<Document> logPostagem = mongoDatabase.getCollection("log_postagem");
     MongoCollection<Document> logUsuario = mongoDatabase.getCollection("log_usuario");
+    MongoCollection<Document> logAcesso = mongoDatabase.getCollection("log_acesso");
 }
