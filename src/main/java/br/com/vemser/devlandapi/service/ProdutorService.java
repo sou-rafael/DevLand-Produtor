@@ -1,7 +1,8 @@
 package br.com.vemser.devlandapi.service;
 
-import br.com.vemser.devlandapi.dto.mensagem.MensagemDTO;
+import br.com.vemser.devlandapi.dto.mensagem.EmailDTO;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
+import br.com.vemser.devlandapi.enums.TipoMensagem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +35,17 @@ public class ProdutorService {
     private String topicoEmail;
 
     public void enviarMensagemEmail(UsuarioEntity usuarioEntity, String tipo) throws JsonProcessingException {
-        MensagemDTO mensagemDTO = new MensagemDTO();
-        mensagemDTO.setUsuarioEntity(usuarioEntity);
-        mensagemDTO.setTipo(tipo);
-        mensagemDTO.setDataCriacao(LocalDateTime.now());
-        enviarMensagem(mensagemDTO, topicoEmail);
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setEmail(usuarioEntity.getEmail());
+        emailDTO.setIdUsuario(usuarioEntity.getIdUsuario());
+        emailDTO.setTipoMensagem(TipoMensagem.ofTipo(tipo));
+        emailDTO.setFoto(usuarioEntity.getFoto());
+        emailDTO.setNome(usuarioEntity.getNome());
+
+        enviarMensagem(emailDTO, topicoEmail);
     }
-    private void enviarMensagem(MensagemDTO mensagemDTO, String topico) throws JsonProcessingException {
-        String mensagemString = objectMapper.writeValueAsString(mensagemDTO);
+    private void enviarMensagem(EmailDTO emailDTO, String topico) throws JsonProcessingException {
+        String mensagemString = objectMapper.writeValueAsString(emailDTO);
 
         MessageBuilder<String> stringMessageBuilder = MessageBuilder.withPayload(mensagemString)
                 .setHeader(KafkaHeaders.TOPIC, topico)
