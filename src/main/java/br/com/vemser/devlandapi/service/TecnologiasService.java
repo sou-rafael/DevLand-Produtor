@@ -32,9 +32,6 @@ public class TecnologiasService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private EmailService emailService;
-
-    @Autowired
     private UserLoginService userLoginService;
 
 

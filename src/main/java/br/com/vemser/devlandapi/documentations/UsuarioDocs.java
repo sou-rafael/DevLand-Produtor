@@ -8,6 +8,7 @@ import br.com.vemser.devlandapi.dto.usuario.UsuarioDTO;
 import br.com.vemser.devlandapi.enums.Genero;
 import br.com.vemser.devlandapi.enums.TipoUsuario;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public interface UsuarioDocs {
 
     @UsuarioNotas
     @Operation(summary = "Deletar um usuario", description = "Deleta um usuario do banco de dados atraves de seu id.")
-    public void delete(@PathVariable("idUsuario") Integer id) throws RegraDeNegocioException;
+    public void delete(@PathVariable("idUsuario") Integer id) throws RegraDeNegocioException, JsonProcessingException;
 
     @UsuarioNotas
     @Operation(summary = "Filtrar os usuarios por Stack", description = "Filtra os usuarios por stack.")

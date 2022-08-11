@@ -9,6 +9,7 @@ import br.com.vemser.devlandapi.enums.Genero;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.devlandapi.service.UserLoginService;
 import br.com.vemser.devlandapi.service.UsuarioService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class UsuarioController implements UsuarioDocs {
 
 
     @DeleteMapping("/{idUsuario}")
-    public void delete(@PathVariable("idUsuario") Integer id) throws RegraDeNegocioException {
+    public void delete(@PathVariable("idUsuario") Integer id) throws RegraDeNegocioException, JsonProcessingException {
         log.info("Deletando um usuário com base em seu id");
         usuarioService.delete(id);
     }

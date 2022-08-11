@@ -10,6 +10,7 @@ import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.devlandapi.security.TokenService;
 import br.com.vemser.devlandapi.service.UserLoginService;
 import br.com.vemser.devlandapi.service.UsuarioService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +68,7 @@ public class AuthController implements AuthDocs {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<UsuarioDTO> adicionar(@Valid @RequestBody UserLoginCreateDTO userLoginCreateDTO) throws RegraDeNegocioException {
+    public ResponseEntity<UsuarioDTO> adicionar(@Valid @RequestBody UserLoginCreateDTO userLoginCreateDTO) throws RegraDeNegocioException, JsonProcessingException {
         return ResponseEntity.ok(usuarioService.adicionar(userLoginCreateDTO));
     }
 

@@ -30,7 +30,7 @@ public class ProdutorService {
     @Value("${kafka.user}")
     private String usuario;
 
-    @Value("${kafka.topic}")
+    @Value("${kafka.topic-email}")
     private String topicoEmail;
 
     public void enviarMensagemEmail(UsuarioEntity usuarioEntity, String tipo) throws JsonProcessingException {
