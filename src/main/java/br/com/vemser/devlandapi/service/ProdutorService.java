@@ -1,6 +1,7 @@
 package br.com.vemser.devlandapi.service;
 
 import br.com.vemser.devlandapi.dto.mensagem.EmailDTO;
+import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
 import br.com.vemser.devlandapi.enums.TipoMensagem;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,6 +45,18 @@ public class ProdutorService {
 
         enviarMensagem(emailDTO, topicoEmail);
     }
+
+    public void enviarMensagemEmail2(RelatorioPersonalizadoDevDTO usuarioEntity, String tipo) throws JsonProcessingException {
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setEmail(usuarioEntity.getEmail());
+        //emailDTO.setIdUsuario(usuarioEntity.getIdUsuario());
+        emailDTO.setTipoMensagem(TipoMensagem.ofTipo(tipo));
+        emailDTO.setFoto(usuarioEntity.getFoto());
+        emailDTO.setNome(usuarioEntity.getNome());
+
+        enviarMensagem(emailDTO, topicoEmail);
+    }
+
     private void enviarMensagem(EmailDTO emailDTO, String topico) throws JsonProcessingException {
         String mensagemString = objectMapper.writeValueAsString(emailDTO);
 
