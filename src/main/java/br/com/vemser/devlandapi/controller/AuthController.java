@@ -1,12 +1,15 @@
 package br.com.vemser.devlandapi.controller;
 
 import br.com.vemser.devlandapi.documentations.AuthDocs;
+import br.com.vemser.devlandapi.dto.acesso.LogAcessoDTO;
 import br.com.vemser.devlandapi.dto.userlogin.UserLoginAuthDTO;
 import br.com.vemser.devlandapi.dto.userlogin.UserLoginCreateDTO;
 import br.com.vemser.devlandapi.dto.usuario.UsuarioDTO;
 import br.com.vemser.devlandapi.entity.UserLoginEntity;
+import br.com.vemser.devlandapi.entity.UsuarioEntity;
 import br.com.vemser.devlandapi.enums.TipoStatus;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.devlandapi.repository.LogAcessoRepository;
 import br.com.vemser.devlandapi.security.TokenService;
 import br.com.vemser.devlandapi.service.UserLoginService;
 import br.com.vemser.devlandapi.service.UsuarioService;
@@ -21,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,9 +40,11 @@ public class AuthController implements AuthDocs {
 
     private final UsuarioService usuarioService;
 
+    private final LogAcessoRepository logAcessoRepository;
+
     @PostMapping
     public String auth(@RequestBody @Valid UserLoginAuthDTO userLoginAuthDTO) throws RegraDeNegocioException {
-
+        LogAcessoDTO logAcessoDTO = new LogAcessoDTO();
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(
                         userLoginAuthDTO.getLogin(),
@@ -50,6 +56,17 @@ public class AuthController implements AuthDocs {
         Object usuarioLogado = authentication.getPrincipal();
         UserLoginEntity userLoginEntity = (UserLoginEntity) usuarioLogado;
         String token = tokenService.getToken(userLoginEntity);
+
+// INSTANCIANDO O LogAcessoDTO E MANDANDO P MONGO
+
+        UsuarioEntity usuarioEntity = userLoginEntity.getUsuarioEntity();
+
+        logAcessoDTO.setNome(usuarioEntity.getNome());
+        logAcessoDTO.setEmail(usuarioEntity.getEmail());
+        logAcessoDTO.setData(LocalDateTime.now());
+
+        logAcessoRepository.save(logAcessoDTO);
+                // =====================
         return token;
     }
 
