@@ -1,5 +1,6 @@
 package br.com.vemser.devlandapi.teste;
 
+import br.com.vemser.devlandapi.dto.relatorios.DadosNulosDTO;
 import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.enums.TipoMensagem;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
@@ -37,10 +38,10 @@ public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
     private ProdutorService produtorService;
 
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 5000)
     public void reportCurrentTime() throws InterruptedException, RegraDeNegocioException {
 
-        List<RelatorioPersonalizadoDevDTO> usuarioDTO = usuarioRepository.relatorioPersonalizadoDevGeneroDTO2();
+        List<DadosNulosDTO> usuarioDTO = usuarioRepository.relatorioPersonalizadoDevGeneroDTO2();
 
         usuarioDTO.forEach(usuario -> {
             try {
@@ -52,5 +53,6 @@ public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
 
 
         log.info("deu certo");
+        Thread.sleep(1000);
     }
 }

@@ -7,7 +7,6 @@ public enum TipoMensagem {
     CREATE("create"),
     UPDATE("update"),
     DELETE("delete"),
-
     CADASTROINCOMPLETO("cadastro_incompleto");
 
     private String tipoMensagem;

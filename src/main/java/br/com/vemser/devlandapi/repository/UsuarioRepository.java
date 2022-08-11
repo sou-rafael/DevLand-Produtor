@@ -1,5 +1,6 @@
 package br.com.vemser.devlandapi.repository;
 
+import br.com.vemser.devlandapi.dto.relatorios.DadosNulosDTO;
 import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
 import br.com.vemser.devlandapi.enums.Genero;
@@ -62,25 +63,19 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
             " where (:genero is null OR u.genero = :genero )")
     Page<RelatorioPersonalizadoDevDTO> relatorioPersonalizadoDevGeneroDTO(@Param("genero") Genero genero, Pageable pageable);
 
-    @Query(value = " select new br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO(" +
+    @Query(value = " select new br.com.vemser.devlandapi.dto.relatorios.DadosNulosDTO(" +
             " u.nome," +
             " u.email," +
-            " u.areaAtuacao," +
-            " u.foto," +
-            " u.genero," +
-            " u.tipoUsuario," +
             " c.tipo," +
             " c.numero," +
             " c.descricao," +
             " e.cidade," +
             " e.estado," +
-            " e.pais," +
-            " t.nomeTecnologia" +
+            " e.pais" +
             ") " +
             " from usuario u " +
-            " left join u.contatos c " +
-            " left join u.enderecos e " +
-            " left join u.tecnologias t " +
+            " full join u.contatos c " +
+            " full join u.enderecos e " +
             " where (c.tipo is null OR c.numero is null OR c.descricao is null OR e.cidade is null OR e.estado is null OR e.pais is null)")
-    List<RelatorioPersonalizadoDevDTO> relatorioPersonalizadoDevGeneroDTO2();
+    List<DadosNulosDTO> relatorioPersonalizadoDevGeneroDTO2();
 }
