@@ -5,35 +5,23 @@ import br.com.vemser.devlandapi.enums.TipoMensagem;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.devlandapi.repository.UsuarioRepository;
 import br.com.vemser.devlandapi.service.ProdutorService;
-import br.com.vemser.devlandapi.service.UsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
 @Slf4j
 public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private ProdutorService produtorService;
-
 
     @Scheduled(cron = "0 0 8 ? * MON *" )
     public void reportCurrentTime() throws InterruptedException, RegraDeNegocioException {
