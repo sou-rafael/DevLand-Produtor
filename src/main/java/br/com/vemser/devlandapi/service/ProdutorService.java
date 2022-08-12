@@ -2,7 +2,6 @@ package br.com.vemser.devlandapi.service;
 
 import br.com.vemser.devlandapi.dto.mensagem.EmailDTO;
 import br.com.vemser.devlandapi.dto.relatorios.DadosNulosDTO;
-import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
 import br.com.vemser.devlandapi.enums.TipoMensagem;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service

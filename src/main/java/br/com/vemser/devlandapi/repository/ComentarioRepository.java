@@ -1,6 +1,5 @@
 package br.com.vemser.devlandapi.repository;
 
-import br.com.vemser.devlandapi.dto.comentario.ComentarioDTO;
 import br.com.vemser.devlandapi.entity.ComentarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
