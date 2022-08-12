@@ -2,6 +2,7 @@ package br.com.vemser.devlandapi.service;
 
 import br.com.vemser.devlandapi.dto.*;
 import br.com.vemser.devlandapi.dto.acesso.LogAcessoDTO;
+import br.com.vemser.devlandapi.dto.acesso.LogAcessoRetornoDTO;
 import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.dto.userlogin.UserLoginCreateDTO;
 import br.com.vemser.devlandapi.dto.usuario.UsuarioCreateDTO;
@@ -90,14 +91,14 @@ public class UsuarioService {
     }
 
     //    ======================= CONFERIR ACESSOS USUARIOS ==============================
-    @Scheduled(cron = "0 0 * * * MON")
+    @Scheduled(cron = "0 0 12 ? * MON")
     public void chamarUsuarioDeVolta() throws JsonProcessingException {
-        List<LogAcessoDTO> logAcessoDTOS = logAcessoRepository.retornarAggregation();
-        for (LogAcessoDTO log: logAcessoDTOS
-             ) {
+        List<LogAcessoRetornoDTO> logAcessoRetornoDTOS = logAcessoRepository.retornarAggregation();
+        for (LogAcessoRetornoDTO log: logAcessoRetornoDTOS)
+        {
             UsuarioEntity usuarioEntity = objectMapper.convertValue(log, UsuarioEntity.class);
 
-            if(log.getData().isAfter(LocalDateTime.now().minusDays(8))) {
+            if(log.getData().isBefore(LocalDateTime.now().minusDays(8))) {
                 produtorService.enviarMensagemEmail(usuarioEntity, TipoMensagem.MISSYOU.getTipo());
                 System.out.println("mensagem MISSYOU enviada");
             }

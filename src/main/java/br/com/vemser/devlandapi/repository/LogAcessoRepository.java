@@ -1,6 +1,7 @@
 package br.com.vemser.devlandapi.repository;
 
 import br.com.vemser.devlandapi.dto.acesso.LogAcessoDTO;
+import br.com.vemser.devlandapi.dto.acesso.LogAcessoRetornoDTO;
 import lombok.extern.java.Log;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -24,5 +25,5 @@ public interface LogAcessoRepository extends MongoRepository<LogAcessoDTO,Intege
             "        }\n" +
             "    }\n" +
             "}")
-    List<LogAcessoDTO> retornarAggregation();
+    List<LogAcessoRetornoDTO> retornarAggregation();
 }
