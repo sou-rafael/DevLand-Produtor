@@ -1,6 +1,7 @@
 package br.com.vemser.devlandapi.service;
 
 import br.com.vemser.devlandapi.dto.*;
+import br.com.vemser.devlandapi.dto.acesso.LogAcessoDTO;
 import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
 import br.com.vemser.devlandapi.dto.userlogin.UserLoginCreateDTO;
 import br.com.vemser.devlandapi.dto.usuario.UsuarioCreateDTO;
@@ -10,6 +11,7 @@ import br.com.vemser.devlandapi.enums.Genero;
 import br.com.vemser.devlandapi.enums.TipoMensagem;
 import br.com.vemser.devlandapi.enums.TipoUsuario;
 import br.com.vemser.devlandapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.devlandapi.repository.LogAcessoRepository;
 import br.com.vemser.devlandapi.repository.LogUsuarioRepository;
 import br.com.vemser.devlandapi.repository.UserLoginRepository;
 import br.com.vemser.devlandapi.repository.UsuarioRepository;
@@ -20,10 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.Document;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +52,9 @@ public class UsuarioService {
 
     @Autowired
     private LogUsuarioRepository logUsuarioRepository;
+
+    @Autowired
+    private LogAcessoRepository logAcessoRepository;
 
     public List<UsuarioDTO> listar() throws RegraDeNegocioException {
         if (usuarioRepository.findAll().size() == 0) {
@@ -77,9 +86,25 @@ public class UsuarioService {
         usuarioRepository.delete(usuarioRecuperado);
         String tipoMensagem = TipoMensagem.DELETE.getTipo();
 //        emailService.sendEmailUsuario(usuarioRecuperado, tipoMensagem);
-        produtorService.enviarMensagemEmail(usuarioRecuperado,tipoMensagem);
+        produtorService.enviarMensagemEmail(usuarioRecuperado, tipoMensagem);
     }
 
+    //    ======================= CONFERIR ACESSOS USUARIOS ==============================
+    @Scheduled(cron = "0 0 * * * MON")
+    public void chamarUsuarioDeVolta() throws JsonProcessingException {
+        List<LogAcessoDTO> logAcessoDTOS = logAcessoRepository.retornarAggregation();
+        for (LogAcessoDTO log: logAcessoDTOS
+             ) {
+            UsuarioEntity usuarioEntity = objectMapper.convertValue(log, UsuarioEntity.class);
+
+            if(log.getData().isAfter(LocalDateTime.now().minusDays(8))) {
+                produtorService.enviarMensagemEmail(usuarioEntity, TipoMensagem.MISSYOU.getTipo());
+                System.out.println("mensagem MISSYOU enviada");
+            }
+        }
+    }
+
+    // =========================================================
     public UsuarioDTO adicionar(UserLoginCreateDTO userLoginCreateDTO) throws RegraDeNegocioException, JsonProcessingException {
 
         if (userLoginCreateDTO.getUsuarioCreateDTO().getTipoUsuario() == TipoUsuario.ADMIN) {
@@ -294,7 +319,7 @@ public class UsuarioService {
 
     public static class ValidaCNPJ {
 
-        public static boolean isCNPJ(@NotNull String CNPJ)  {
+        public static boolean isCNPJ(@NotNull String CNPJ) {
             // considera-se erro CNPJ's formados por uma sequencia de numeros iguais
             if (CNPJ.equals("00000000000000") || CNPJ.equals("11111111111111") ||
                     CNPJ.equals("22222222222222") || CNPJ.equals("33333333333333") ||
