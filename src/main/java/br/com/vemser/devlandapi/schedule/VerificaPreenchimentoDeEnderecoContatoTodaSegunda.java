@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
+public class VerificaPreenchimentoDeEnderecoContatoTodaSegunda {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -23,8 +23,8 @@ public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
     @Autowired
     private ProdutorService produtorService;
 
-    @Scheduled(cron = "0 0 8 ? * MON *" )
-    public void reportCurrentTime() throws InterruptedException, RegraDeNegocioException {
+    @Scheduled(cron = "0 0 8 * * MON" )
+    public void reportCurrentTime() {
         List<DadosNulosDTO> usuarioDTO = usuarioRepository.verificadorUsuariosComDadosNulos();
         usuarioDTO.forEach(usuario -> {
             try {
