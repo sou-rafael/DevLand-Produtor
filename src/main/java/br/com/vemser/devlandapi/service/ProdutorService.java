@@ -1,7 +1,7 @@
 package br.com.vemser.devlandapi.service;
 
 import br.com.vemser.devlandapi.dto.mensagem.EmailDTO;
-import br.com.vemser.devlandapi.dto.relatorios.RelatorioPersonalizadoDevDTO;
+import br.com.vemser.devlandapi.dto.relatorios.DadosNulosDTO;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
 import br.com.vemser.devlandapi.enums.TipoMensagem;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -46,12 +45,10 @@ public class ProdutorService {
         enviarMensagem(emailDTO, topicoEmail);
     }
 
-    public void enviarMensagemEmail2(RelatorioPersonalizadoDevDTO usuarioEntity, String tipo) throws JsonProcessingException {
+    public void enviarMensagemEmail2(DadosNulosDTO usuarioEntity, String tipo) throws JsonProcessingException {
         EmailDTO emailDTO = new EmailDTO();
         emailDTO.setEmail(usuarioEntity.getEmail());
-        //emailDTO.setIdUsuario(usuarioEntity.getIdUsuario());
         emailDTO.setTipoMensagem(TipoMensagem.ofTipo(tipo));
-        emailDTO.setFoto(usuarioEntity.getFoto());
         emailDTO.setNome(usuarioEntity.getNome());
 
         enviarMensagem(emailDTO, topicoEmail);

@@ -1,10 +1,9 @@
 package br.com.vemser.devlandapi.service;
 
+import br.com.vemser.devlandapi.dto.PageDTO;
 import br.com.vemser.devlandapi.dto.comentario.ComentarioCreateDTO;
 import br.com.vemser.devlandapi.dto.comentario.ComentarioDTO;
-import br.com.vemser.devlandapi.dto.PageDTO;
 import br.com.vemser.devlandapi.dto.postagem.PostagemCreateDTO;
-import br.com.vemser.devlandapi.dto.usuario.UsuarioDTO;
 import br.com.vemser.devlandapi.entity.ComentarioEntity;
 import br.com.vemser.devlandapi.entity.PostagemEntity;
 import br.com.vemser.devlandapi.entity.UsuarioEntity;
