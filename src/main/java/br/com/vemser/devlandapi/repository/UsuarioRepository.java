@@ -77,5 +77,5 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Integer>
             " full join u.contatos c " +
             " full join u.enderecos e " +
             " where (c.tipo is null OR c.numero is null OR c.descricao is null OR e.cidade is null OR e.estado is null OR e.pais is null)")
-    List<DadosNulosDTO> relatorioPersonalizadoDevGeneroDTO2();
+    List<DadosNulosDTO> verificadorUsuariosComDadosNulos();
 }

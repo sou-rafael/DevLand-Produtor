@@ -35,9 +35,9 @@ public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
     private ProdutorService produtorService;
 
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 0 8 ? * MON *" )
     public void reportCurrentTime() throws InterruptedException, RegraDeNegocioException {
-        List<DadosNulosDTO> usuarioDTO = usuarioRepository.relatorioPersonalizadoDevGeneroDTO2();
+        List<DadosNulosDTO> usuarioDTO = usuarioRepository.verificadorUsuariosComDadosNulos();
         usuarioDTO.forEach(usuario -> {
             try {
                 produtorService.enviarMensagemEmail2(usuario, TipoMensagem.CADASTROINCOMPLETO.getTipo());
@@ -48,6 +48,5 @@ public class VerificaPreenchimentoDeEnderecoContatoTodoDia {
                 throw new RuntimeException(e);
             }
         });
-        log.info("deu certo");
     }
 }

@@ -48,7 +48,6 @@ public class ProdutorService {
     public void enviarMensagemEmail2(DadosNulosDTO usuarioEntity, String tipo) throws JsonProcessingException {
         EmailDTO emailDTO = new EmailDTO();
         emailDTO.setEmail(usuarioEntity.getEmail());
-        //emailDTO.setIdUsuario(usuarioEntity.getIdUsuario());
         emailDTO.setTipoMensagem(TipoMensagem.ofTipo(tipo));
         emailDTO.setNome(usuarioEntity.getNome());
 
